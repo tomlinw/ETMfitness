@@ -1,0 +1,36 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free shipping over $75 — 60-day returns"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Lifetime warranty on all cast-iron gear"
+          }
+        }
+      },
+      "block_order": ["announcement-1", "announcement-2"],
+      "settings": {
+        "background": "#d7ff3e",
+        "text_color": "#0b0c0e",
+        "rotate_speed": 5
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

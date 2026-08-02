@@ -1,0 +1,13 @@
+{
+  "settings_schema": {
+    "brand": {
+      "name": "Brand"
+    },
+    "colors": {
+      "name": "Colors"
+    },
+    "typography": {
+      "name": "Typography"
+    }
+  }
+}

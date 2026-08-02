@@ -1,0 +1,34 @@
+{%- comment -%}
+  Renders pagination controls.
+  Accepts: - paginate: {Object} paginate drop (required)
+{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+    {%- if paginate.previous -%}
+      <a class="pagination__item" href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
+        {% render 'icon', icon: 'arrow-right', size: 16 %}
+        <span class="visually-hidden">{{ 'general.pagination.previous' | t }}</span>
+      </a>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a class="pagination__item" href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+          {{- part.title -}}
+        </a>
+      {%- elsif part.title == paginate.current_page -%}
+        <span class="pagination__item pagination__item--current" aria-current="page">{{ part.title }}</span>
+      {%- else -%}
+        <span class="pagination__item">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <a class="pagination__item" href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
+        {% render 'icon', icon: 'arrow-right', size: 16 %}
+        <span class="visually-hidden">{{ 'general.pagination.next' | t }}</span>
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

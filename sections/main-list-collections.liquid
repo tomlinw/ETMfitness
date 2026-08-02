@@ -1,0 +1,38 @@
+<div class="page-width section">
+  <div class="collection-banner" style="border:0">
+    <h1>{{ page_title | escape }}</h1>
+  </div>
+
+  <div class="collection-list" style="--collection-columns: {{ section.settings.columns }}">
+    {%- for collection in collections -%}
+      <a class="collection-card" href="{{ collection.url }}">
+        {%- if collection.featured_image -%}
+          <img
+            src="{{ collection.featured_image | image_url: width: 900 }}"
+            alt="{{ collection.featured_image.alt | escape }}"
+            width="{{ collection.featured_image.width }}"
+            height="{{ collection.featured_image.height }}"
+            loading="lazy"
+          >
+        {%- else -%}
+          {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        <div class="collection-card__content">
+          <span class="collection-card__title">{{ collection.title | escape }}</span>
+          <span class="collection-card__count">
+            {{ 'collections.general.items_with_count' | t: count: collection.products_count }}
+          </span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Columns on desktop", "default": 3 }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "New — Forged Series",
+        "heading": "Train like it matters",
+        "subheading": "Commercial-grade barbells, bells and benches built to outlast the programme you're on.",
+        "button_label": "Shop all gear",
+        "button_link": "shopify://collections/all",
+        "button_2_label": "Build your home gym",
+        "alignment": "left",
+        "height": 80,
+        "overlay_opacity": 55
+      }
+    },
+    "value-props": {
+      "type": "value-props",
+      "blocks": {
+        "shipping": {
+          "type": "prop",
+          "settings": { "icon": "truck", "title": "Free shipping over $75", "text": "Ships in 1–2 business days" }
+        },
+        "warranty": {
+          "type": "prop",
+          "settings": { "icon": "shield", "title": "Lifetime warranty", "text": "On all cast-iron and steel" }
+        },
+        "returns": {
+          "type": "prop",
+          "settings": { "icon": "return", "title": "60-day returns", "text": "Train with it, then decide" }
+        },
+        "tested": {
+          "type": "prop",
+          "settings": { "icon": "dumbbell", "title": "Coach-tested", "text": "Vetted in real training rooms" }
+        }
+      },
+      "block_order": ["shipping", "warranty", "returns", "tested"]
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Best sellers",
+        "heading": "The essentials",
+        "description": "The gear that leaves the warehouse fastest — and comes back least.",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "show_view_all": true
+      }
+    },
+    "categories": {
+      "type": "collection-list",
+      "settings": {
+        "eyebrow": "Shop by category",
+        "heading": "Pick your discipline",
+        "columns": 3
+      },
+      "blocks": {
+        "cat-1": { "type": "collection", "settings": { "title": "Strength" } },
+        "cat-2": { "type": "collection", "settings": { "title": "Conditioning" } },
+        "cat-3": { "type": "collection", "settings": { "title": "Recovery" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3"]
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "Lifetime warranty, Coach-tested, Free shipping over $75, 60-day returns, Built in-house",
+        "speed": 30
+      }
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Why Ironforge",
+        "heading": "Built to be handed down",
+        "text": "<p>Every bar is knurled and tested in-house. Every bell is single-cast, then powder-coated so chalk grips instead of slides. We spec the same equipment we put in the training rooms we work with — which is why the warranty is lifetime and the returns window is 60 days.</p>",
+        "button_label": "Our standards",
+        "layout": "normal"
+      }
+    },
+    "new-arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just landed",
+        "heading": "New arrivals",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "show_view_all": true
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "Reviews",
+        "heading": "What the gym floor says"
+      },
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Third year on the same bar. Knurling still bites, spin is still smooth, and it lives on an unheated garage rack.",
+            "author": "Dana R. — Verified buyer",
+            "rating": 5
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Bought two 24kg bells for the studio. Handles are consistent enough that clients don't notice switching between them mid-set.",
+            "author": "Marcus T. — Strength coach",
+            "rating": 5
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Ordered Thursday, training on it Saturday. The bench doesn't wobble under 300, which is more than I can say for the last one.",
+            "author": "Priya S. — Verified buyer",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "10% off your first order",
+        "heading": "Join the training list",
+        "text": "Programming notes, restock alerts, and early access to drops."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "value-props",
+    "best-sellers",
+    "categories",
+    "marquee",
+    "story",
+    "new-arrivals",
+    "testimonials",
+    "newsletter"
+  ]
+}

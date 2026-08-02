@@ -1,0 +1,51 @@
+<div class="page-width section">
+  <h1>Order {{ order.name }}</h1>
+  <p class="text-muted">Placed {{ order.created_at | date: '%b %d, %Y' }}</p>
+
+  <div class="cart-page">
+    <div>
+      <ul role="list">
+        {%- for line_item in order.line_items -%}
+          <li class="cart-item">
+            {%- if line_item.image -%}
+              <img class="cart-item__image" src="{{ line_item.image | image_url: width: 200 }}" alt="{{ line_item.title | escape }}" width="76" height="76" loading="lazy">
+            {%- else -%}
+              <span class="cart-item__image"></span>
+            {%- endif -%}
+            <div class="cart-item__details">
+              <span class="cart-item__title">{{ line_item.title }}</span>
+              <span class="cart-item__variant">Qty {{ line_item.quantity }}</span>
+              <strong>{{ line_item.final_line_price | money }}</strong>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <aside class="cart-summary">
+      <div class="cart-totals" style="font-size:.9rem">
+        <span>Subtotal</span><span>{{ order.subtotal_price | money }}</span>
+      </div>
+      {%- for shipping_method in order.shipping_methods -%}
+        <div class="cart-totals" style="font-size:.9rem">
+          <span>{{ shipping_method.title }}</span><span>{{ shipping_method.price | money }}</span>
+        </div>
+      {%- endfor -%}
+      {%- for tax_line in order.tax_lines -%}
+        <div class="cart-totals" style="font-size:.9rem">
+          <span>Tax ({{ tax_line.title }})</span><span>{{ tax_line.price | money }}</span>
+        </div>
+      {%- endfor -%}
+      <div class="cart-totals">
+        <span>Total</span><span>{{ order.total_price | money_with_currency }}</span>
+      </div>
+
+      <div>
+        <div class="footer__heading">Shipping address</div>
+        <div class="text-muted">{{ order.shipping_address | format_address }}</div>
+      </div>
+    </aside>
+  </div>
+
+  <a class="link-arrow" href="{{ routes.account_url }}">Back to account</a>
+</div>

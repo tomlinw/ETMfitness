@@ -1,0 +1,41 @@
+{%- paginate blog.articles by 12 -%}
+  <div class="page-width section">
+    <div class="collection-banner" style="border:0; padding-bottom:2rem">
+      <span class="eyebrow">{{ 'blogs.article.read_more' | t }}</span>
+      <h1>{{ blog.title | escape }}</h1>
+    </div>
+
+    <div class="article-grid">
+      {%- for article in blog.articles -%}
+        <article class="article-card">
+          {%- if article.image -%}
+            <a href="{{ article.url }}">
+              <img
+                class="article-card__image"
+                src="{{ article.image | image_url: width: 800 }}"
+                alt="{{ article.image.alt | escape }}"
+                width="{{ article.image.width }}"
+                height="{{ article.image.height }}"
+                loading="lazy"
+              >
+            </a>
+          {%- endif -%}
+          <div class="article-card__meta">
+            {{ article.published_at | date: '%b %d, %Y' }}
+            {%- if article.tags.size > 0 %} · {{ article.tags.first }}{% endif -%}
+          </div>
+          <h2 class="h3"><a href="{{ article.url }}">{{ article.title | escape }}</a></h2>
+          <p class="text-muted" style="margin-top:.5rem">{{ article.excerpt_or_content | strip_html | truncate: 130 }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {% render 'pagination', paginate: paginate %}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Blog posts"
+}
+{% endschema %}

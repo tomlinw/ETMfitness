@@ -1,0 +1,58 @@
+{%- comment -%}
+  Renders a price block.
+  Accepts:
+    - product_or_variant: {Object} product or variant (required)
+    - show_badges: {Boolean} render sale / sold-out badge
+    - use_variant: {Boolean} price the selected variant instead of the product range
+{%- endcomment -%}
+
+{%- liquid
+  if use_variant and product_or_variant.selected_or_first_available_variant
+    assign target = product_or_variant.selected_or_first_available_variant
+  else
+    assign target = product_or_variant
+  endif
+
+  assign compare_at = target.compare_at_price
+  assign price = target.price | default: 0
+
+  assign on_sale = false
+  if compare_at > price
+    assign on_sale = true
+  endif
+
+  assign show_from = false
+  if product_or_variant.price_varies and use_variant != true
+    assign show_from = true
+  endif
+-%}
+
+<div class="price {% if on_sale %}price--on-sale{% endif %}">
+  {%- if on_sale -%}
+    <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+    <span class="price__sale">
+      {%- if show_from -%}
+        {{ 'products.product.price.from_price_html' | t: price: price | money }}
+      {%- else -%}
+        {{ price | money }}
+      {%- endif -%}
+    </span>
+    <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+    <s class="price__compare">{{ compare_at | money }}</s>
+  {%- else -%}
+    <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+    <span class="price__regular">
+      {%- if show_from -%}
+        {{ 'products.product.price.from_price_html' | t: price: price | money }}
+      {%- else -%}
+        {{ price | money }}
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+
+  {%- if target.unit_price_measurement -%}
+    <span class="price__unit">
+      {{ target.unit_price | money }}/{% if target.unit_price_measurement.reference_value != 1 %}{{ target.unit_price_measurement.reference_value }}{% endif %}{{ target.unit_price_measurement.reference_unit }}
+    </span>
+  {%- endif -%}
+</div>

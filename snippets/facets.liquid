@@ -1,0 +1,134 @@
+{%- comment -%}
+  Renders storefront filters and sorting for a collection or search results.
+  Accepts:
+    - results: {Object} collection or search object (required)
+    - enable_filtering: {Boolean}
+    - enable_sorting: {Boolean}
+{%- endcomment -%}
+
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  if results.url
+    assign results_url = results.url
+  else
+    assign terms = results.terms | escape
+    assign results_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&'
+  endif
+-%}
+
+<div class="collection-toolbar">
+  {%- if enable_filtering and results.filters.size > 0 -%}
+    <form data-facet-form method="get" action="{{ results_url }}" class="facets">
+      {%- if results.terms -%}
+        <input type="hidden" name="q" value="{{ results.terms | escape }}">
+        <input type="hidden" name="options[prefix]" value="last">
+      {%- endif -%}
+
+      {%- for filter in results.filters -%}
+        {%- case filter.type -%}
+          {%- when 'boolean', 'list' -%}
+            <details class="facet">
+              <summary class="facet__summary">
+                {{ filter.label | escape }}
+                {%- if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif -%}
+                {% render 'icon', icon: 'chevron-down', size: 14 %}
+              </summary>
+              <div class="facet__panel">
+                {%- for value in filter.values -%}
+                  <label class="facet__option">
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                    >
+                    <span>{{ value.label | escape }} ({{ value.count }})</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </details>
+
+          {%- when 'price_range' -%}
+            <details class="facet">
+              <summary class="facet__summary">
+                {{ filter.label | escape }}
+                {% render 'icon', icon: 'chevron-down', size: 14 %}
+              </summary>
+              <div class="facet__panel">
+                <p class="text-muted" style="font-size:.8rem">
+                  {{ 'collections.filters.max_price' | t: price: filter.range_max | money }}
+                </p>
+                <div style="display:flex; gap:.5rem; margin-top:.5rem">
+                  <label class="field">
+                    <span class="field__label">{{ 'collections.filters.from' | t }}</span>
+                    <input
+                      class="input"
+                      name="{{ filter.min_value.param_name }}"
+                      type="number"
+                      min="0"
+                      max="{{ filter.range_max | divided_by: 100 }}"
+                      {% if filter.min_value.value %}value="{{ filter.min_value.value | divided_by: 100 }}"{% endif %}
+                    >
+                  </label>
+                  <label class="field">
+                    <span class="field__label">{{ 'collections.filters.to' | t }}</span>
+                    <input
+                      class="input"
+                      name="{{ filter.max_value.param_name }}"
+                      type="number"
+                      min="0"
+                      max="{{ filter.range_max | divided_by: 100 }}"
+                      {% if filter.max_value.value %}value="{{ filter.max_value.value | divided_by: 100 }}"{% endif %}
+                    >
+                  </label>
+                </div>
+              </div>
+            </details>
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <noscript>
+        <button type="submit" class="button button--small button--secondary">
+          {{ 'collections.filters.apply' | t }}
+        </button>
+      </noscript>
+    </form>
+  {%- endif -%}
+
+  <div style="display:flex; align-items:center; gap:1rem; margin-left:auto">
+    <span class="text-muted" style="font-size:.85rem">
+      {{ 'collections.general.items_with_count' | t: count: results.products_count | default: results.results_count }}
+    </span>
+
+    {%- if enable_sorting -%}
+      <label class="visually-hidden" for="SortBy">{{ 'collections.sorting.title' | t }}</label>
+      <select id="SortBy" class="select" data-sort-by name="sort_by">
+        {%- for option in results.sort_options -%}
+          <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>
+            {{ option.name | escape }}
+          </option>
+        {%- endfor -%}
+      </select>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- assign active_count = 0 -%}
+{%- for filter in results.filters -%}
+  {%- assign active_count = active_count | plus: filter.active_values.size -%}
+{%- endfor -%}
+
+{%- if active_count > 0 -%}
+  <div class="active-facets">
+    {%- for filter in results.filters -%}
+      {%- for value in filter.active_values -%}
+        <a class="active-facet" href="{{ value.url_to_remove }}">
+          {{ filter.label | escape }}: {{ value.label | escape }}
+          {% render 'icon', icon: 'close', size: 12 %}
+        </a>
+      {%- endfor -%}
+    {%- endfor -%}
+    <a class="active-facet" href="{{ results_url }}">{{ 'collections.filters.clear_all' | t }}</a>
+  </div>
+{%- endif -%}

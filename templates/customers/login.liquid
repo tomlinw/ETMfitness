@@ -1,0 +1,37 @@
+<div class="page-width page-width--narrow section" style="max-width:460px">
+  <h1 style="margin-bottom:1.5rem">Sign in</h1>
+
+  {%- form 'customer_login', class: 'grid', style: 'gap:1rem' -%}
+    {%- if form.errors -%}
+      <p class="form-status form-status--error">{{ form.errors | default_errors }}</p>
+    {%- endif -%}
+
+    <div class="field">
+      <label class="field__label" for="CustomerEmail">Email</label>
+      <input class="input" id="CustomerEmail" type="email" name="customer[email]" autocomplete="email" required>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="CustomerPassword">Password</label>
+      <input class="input" id="CustomerPassword" type="password" name="customer[password]" autocomplete="current-password" required>
+    </div>
+
+    <button class="button" type="submit">Sign in</button>
+    <a href="#recover" class="text-muted" style="font-size:.85rem">Forgot your password?</a>
+    <a href="{{ routes.account_register_url }}" class="text-muted" style="font-size:.85rem">Create an account</a>
+  {%- endform -%}
+
+  <div id="recover" style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--color-border)">
+    <h2 class="h3" style="margin-bottom:1rem">Reset your password</h2>
+    {%- form 'recover_customer_password', class: 'grid', style: 'gap:1rem' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-status form-status--success">We've sent you an email with a link to update your password.</p>
+      {%- endif -%}
+      <div class="field">
+        <label class="field__label" for="RecoverEmail">Email</label>
+        <input class="input" id="RecoverEmail" type="email" name="email" autocomplete="email" required>
+      </div>
+      <button class="button button--secondary" type="submit">Send reset link</button>
+    {%- endform -%}
+  </div>
+</div>

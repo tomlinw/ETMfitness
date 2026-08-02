@@ -1,0 +1,37 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop-menu": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer"
+          }
+        },
+        "support": {
+          "type": "text",
+          "settings": {
+            "heading": "Support",
+            "text": "<p>Mon–Fri, 9–5 PT<br>help@example.com</p>"
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Training intel",
+            "text": "Programming tips and first access to drops. No spam."
+          }
+        }
+      },
+      "block_order": ["shop-menu", "support", "newsletter"],
+      "settings": {
+        "show_payment_icons": true
+      }
+    }
+  },
+  "order": ["footer"]
+}
