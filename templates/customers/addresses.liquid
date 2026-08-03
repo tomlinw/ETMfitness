@@ -1,0 +1,51 @@
+<div class="page-width page-width--narrow section">
+  <h1 style="margin-bottom:1.5rem">Addresses</h1>
+
+  {%- paginate customer.addresses by 10 -%}
+    <div style="display:grid; gap:1rem">
+      {%- for address in customer.addresses -%}
+        <div class="testimonial">
+          {%- if address == customer.default_address -%}
+            <span class="badge">Default</span>
+          {%- endif -%}
+          <div class="text-muted">{{ address | format_address }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {% render 'pagination', paginate: paginate %}
+  {%- endpaginate -%}
+
+  <h2 class="h3" style="margin:3rem 0 1rem">Add a new address</h2>
+  {%- form 'customer_address', customer.new_address, class: 'grid', style: 'gap:1rem' -%}
+    <div class="field">
+      <label class="field__label" for="AddressFirstName">First name</label>
+      <input class="input" id="AddressFirstName" type="text" name="address[first_name]" autocomplete="given-name">
+    </div>
+    <div class="field">
+      <label class="field__label" for="AddressLastName">Last name</label>
+      <input class="input" id="AddressLastName" type="text" name="address[last_name]" autocomplete="family-name">
+    </div>
+    <div class="field">
+      <label class="field__label" for="AddressLine1">Address</label>
+      <input class="input" id="AddressLine1" type="text" name="address[address1]" autocomplete="address-line1">
+    </div>
+    <div class="field">
+      <label class="field__label" for="AddressCity">City</label>
+      <input class="input" id="AddressCity" type="text" name="address[city]" autocomplete="address-level2">
+    </div>
+    <div class="field">
+      <label class="field__label" for="AddressZip">Postal / ZIP code</label>
+      <input class="input" id="AddressZip" type="text" name="address[zip]" autocomplete="postal-code">
+    </div>
+    <div class="field">
+      <label class="field__label" for="AddressCountry">Country</label>
+      <select class="select" id="AddressCountry" name="address[country]" data-default="{{ form.country }}">
+        {{ country_option_tags }}
+      </select>
+    </div>
+    <button class="button" type="submit" style="justify-self:start">Save address</button>
+  {%- endform -%}
+
+  <a class="link-arrow" href="{{ routes.account_url }}" style="margin-top:2rem">Back to account</a>
+</div>

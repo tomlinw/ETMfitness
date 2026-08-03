@@ -1,0 +1,41 @@
+<section class="section" style="--grid-md: 3; --grid-lg: {{ section.settings.columns }}">
+  <div class="page-width">
+    <div class="section-header">
+      <div class="section-header__text">
+        <h2>{{ section.settings.heading | escape }}</h2>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      {%- assign shown = 0 -%}
+      {%- for rec in recommendations.products limit: section.settings.products_to_show -%}
+        {% render 'product-card', product: rec %}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endfor -%}
+
+      {%- if shown == 0 -%}
+        {%- comment -%}
+          Product recommendations load from the Recommendations API. When the
+          section is rendered without it, fall back to the product's collection.
+        {%- endcomment -%}
+        {%- assign fallback = product.collections.first -%}
+        {%- for item in fallback.products limit: section.settings.products_to_show -%}
+          {%- unless item.id == product.id -%}
+            {% render 'product-card', product: item %}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the setup" },
+    { "type": "range", "id": "products_to_show", "min": 2, "max": 8, "step": 1, "label": "Products", "default": 4 },
+    { "type": "range", "id": "columns", "min": 2, "max": 5, "step": 1, "label": "Columns on desktop", "default": 4 }
+  ]
+}
+{% endschema %}

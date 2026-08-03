@@ -1,0 +1,82 @@
+{%- paginate search.results by 24 -%}
+  <div class="page-width">
+    <div class="collection-banner">
+      <h1>{{ 'general.search.search' | t }}</h1>
+      {%- if search.performed -%}
+        <p class="text-muted">
+          {{ 'general.search.results_with_count' | t: count: search.results_count }} — “{{ search.terms | escape }}”
+        </p>
+      {%- endif -%}
+
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form" style="max-width:520px">
+        <label class="visually-hidden" for="SearchPageInput">{{ 'general.search.search' | t }}</label>
+        <input
+          class="input"
+          id="SearchPageInput"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+        <button class="button" type="submit">{{ 'general.search.submit' | t }}</button>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+      {%- if search.results_count == 0 -%}
+        <div class="empty-state">
+          <h2 class="h3">{{ 'general.search.no_results' | t: terms: search.terms }}</h2>
+          <a class="button" href="{{ routes.all_products_collection_url }}">
+            {{ 'collections.general.view_all' | t }}
+          </a>
+        </div>
+      {%- else -%}
+        {% render 'facets', results: search, enable_filtering: true, enable_sorting: true %}
+
+        <div class="product-grid" style="--grid-md: 3; --grid-lg: 4">
+          {%- for item in search.results -%}
+            {%- case item.object_type -%}
+              {%- when 'product' -%}
+                {% render 'product-card', product: item %}
+              {%- when 'article' -%}
+                <article class="card">
+                  {%- if item.image -%}
+                    <a href="{{ item.url }}">
+                      <img
+                        class="article-card__image"
+                        src="{{ item.image | image_url: width: 600 }}"
+                        alt="{{ item.image.alt | escape }}"
+                        width="{{ item.image.width }}"
+                        height="{{ item.image.height }}"
+                        loading="lazy"
+                      >
+                    </a>
+                  {%- endif -%}
+                  <div class="card__info">
+                    <span class="card__vendor">{{ 'blogs.article.read_more' | t }}</span>
+                    <h3 class="card__title"><a href="{{ item.url }}">{{ item.title | escape }}</a></h3>
+                  </div>
+                </article>
+              {%- when 'page' -%}
+                <div class="card">
+                  <div class="card__info">
+                    <h3 class="card__title"><a href="{{ item.url }}">{{ item.title | escape }}</a></h3>
+                    <p class="text-muted">{{ item.content | strip_html | truncate: 120 }}</p>
+                  </div>
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Search results"
+}
+{% endschema %}

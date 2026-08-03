@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": { "type": "vendor" },
+        "title": { "type": "title" },
+        "rating": { "type": "rating" },
+        "price": { "type": "price" },
+        "variant-picker": { "type": "variant_picker" },
+        "inventory": { "type": "inventory", "settings": { "low_stock_threshold": 8 } },
+        "buy-buttons": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
+        "description": { "type": "description" },
+        "meta": { "type": "meta" },
+        "specs": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Shipping & returns",
+            "content": "<p>Free shipping on orders over $75. Most orders leave the warehouse within 1–2 business days. Return anything unused within 60 days for a full refund.</p>"
+          }
+        },
+        "warranty": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Warranty",
+            "content": "<p>Cast-iron and steel equipment carries a lifetime warranty against manufacturing defects. Textiles and consumables are covered for one year.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "rating",
+        "price",
+        "variant-picker",
+        "inventory",
+        "buy-buttons",
+        "description",
+        "meta",
+        "specs",
+        "warranty"
+      ]
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Complete the setup",
+        "products_to_show": 4,
+        "columns": 4
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

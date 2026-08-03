@@ -1,0 +1,31 @@
+{
+  "current": {
+    "logo_width": 150,
+    "brand_tagline": "Gear that earns its place in your gym bag.",
+    "color_background": "#0b0c0e",
+    "color_surface": "#15171b",
+    "color_text": "#f4f5f7",
+    "color_accent": "#d7ff3e",
+    "color_accent_contrast": "#0b0c0e",
+    "color_sale": "#ff5a36",
+    "type_heading_font": "archivo_n7",
+    "type_body_font": "archivo_n4",
+    "heading_scale": 100,
+    "heading_uppercase": true,
+    "page_width": 1360,
+    "corner_radius": 4,
+    "card_image_ratio": "portrait",
+    "card_show_second_image": true,
+    "card_show_vendor": false,
+    "card_show_rating": true,
+    "card_quick_add": true,
+    "cart_type": "drawer",
+    "cart_show_note": true,
+    "free_shipping_threshold": 75,
+    "social_instagram_link": "",
+    "social_tiktok_link": "",
+    "social_youtube_link": "",
+    "social_facebook_link": "",
+    "social_x_link": ""
+  }
+}

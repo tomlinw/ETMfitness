@@ -1,0 +1,6 @@
+{%- comment -%}Renders the cart bubble. Kept in a snippet so the header and the
+cart-icon section (re-rendered via the Section Rendering API) stay in sync.{%- endcomment -%}
+
+<span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>
+  {{- cart.item_count -}}
+</span>

@@ -1,0 +1,29 @@
+<div class="page-width page-width--narrow section" style="max-width:460px">
+  <h1 style="margin-bottom:1.5rem">Create account</h1>
+
+  {%- form 'create_customer', class: 'grid', style: 'gap:1rem' -%}
+    {%- if form.errors -%}
+      <p class="form-status form-status--error">{{ form.errors | default_errors }}</p>
+    {%- endif -%}
+
+    <div class="field">
+      <label class="field__label" for="RegisterFirstName">First name</label>
+      <input class="input" id="RegisterFirstName" type="text" name="customer[first_name]" autocomplete="given-name">
+    </div>
+    <div class="field">
+      <label class="field__label" for="RegisterLastName">Last name</label>
+      <input class="input" id="RegisterLastName" type="text" name="customer[last_name]" autocomplete="family-name">
+    </div>
+    <div class="field">
+      <label class="field__label" for="RegisterEmail">Email</label>
+      <input class="input" id="RegisterEmail" type="email" name="customer[email]" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label class="field__label" for="RegisterPassword">Password</label>
+      <input class="input" id="RegisterPassword" type="password" name="customer[password]" autocomplete="new-password" required>
+    </div>
+
+    <button class="button" type="submit">Create account</button>
+    <a href="{{ routes.account_login_url }}" class="text-muted" style="font-size:.85rem">Already have an account? Sign in</a>
+  {%- endform -%}
+</div>

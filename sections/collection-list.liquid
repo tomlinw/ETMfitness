@@ -1,0 +1,83 @@
+<section class="section">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-header reveal">
+        <div class="section-header__text">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          {%- endif -%}
+          <h2>{{ section.settings.heading | escape }}</h2>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="collection-list reveal" style="--collection-columns: {{ section.settings.columns }}">
+      {%- for block in section.blocks -%}
+        {%- assign collection = collections[block.settings.collection] -%}
+        <a class="collection-card" href="{{ collection.url | default: '#' }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 900 }}"
+              srcset="{{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 900 }} 900w"
+              sizes="(min-width: 750px) 33vw, 50vw"
+              alt="{{ block.settings.image.alt | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="lazy"
+            >
+          {%- elsif collection.featured_image -%}
+            <img
+              src="{{ collection.featured_image | image_url: width: 900 }}"
+              alt="{{ collection.featured_image.alt | escape }}"
+              width="{{ collection.featured_image.width }}"
+              height="{{ collection.featured_image.height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+
+          <div class="collection-card__content">
+            <span class="collection-card__title">
+              {{ block.settings.title | default: collection.title | default: 'Collection' | escape }}
+            </span>
+            {%- if collection != blank -%}
+              <span class="collection-card__count">
+                {{ 'collections.general.items_with_count' | t: count: collection.products_count }}
+              </span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by category" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pick your discipline" },
+    { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Columns on desktop", "default": 3 }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "image_picker", "id": "image", "label": "Image override" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list",
+      "blocks": [{ "type": "collection" }, { "type": "collection" }, { "type": "collection" }]
+    }
+  ]
+}
+{% endschema %}

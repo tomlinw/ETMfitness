@@ -1,0 +1,49 @@
+{%- comment -%}Rendered by /search/suggest with section_id=predictive-search.{%- endcomment -%}
+
+<div data-predictive-results>
+  {%- if predictive_search.performed -%}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <ul role="list">
+        {%- for product in predictive_search.resources.products -%}
+          <li>
+            <a class="predictive-results__item" href="{{ product.url }}">
+              {%- if product.featured_image -%}
+                <img src="{{ product.featured_image | image_url: width: 120 }}" alt="" width="48" height="48" loading="lazy">
+              {%- endif -%}
+              <span style="flex:1">
+                <span style="display:block; font-weight:600">{{ product.title | escape }}</span>
+                {% render 'price', product_or_variant: product %}
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <div class="footer__heading" style="margin-top:1rem">{{ 'collections.general.view_all' | t }}</div>
+      <ul role="list">
+        {%- for collection in predictive_search.resources.collections -%}
+          <li><a class="predictive-results__item" href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if predictive_search.resources.products.size == 0 and predictive_search.resources.collections.size == 0 -%}
+      <p class="text-muted" style="padding:1rem 0">
+        {{ 'general.search.no_results' | t: terms: predictive_search.terms }}
+      </p>
+    {%- else -%}
+      <a class="link-arrow" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}" style="margin-top:1rem">
+        {{ 'general.search.view_all' | t }}
+        {% render 'icon', icon: 'arrow-right', size: 15 %}
+      </a>
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Predictive search"
+}
+{% endschema %}

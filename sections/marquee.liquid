@@ -1,0 +1,32 @@
+{%- liquid
+  assign items = section.settings.text | split: ','
+-%}
+
+<div class="marquee" style="--marquee-speed: {{ section.settings.speed }}s">
+  <div class="marquee__track">
+    {%- for pass in (1..2) -%}
+      <div class="marquee__item" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+        {%- for item in items -%}
+          {{ item | strip | escape }}
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Items",
+      "info": "Separate with commas.",
+      "default": "Lifetime warranty, Coach-tested, Free shipping over $75, 60-day returns, Built in-house"
+    },
+    { "type": "range", "id": "speed", "min": 15, "max": 60, "step": 5, "unit": "s", "label": "Scroll duration", "default": 30 }
+  ],
+  "presets": [{ "name": "Marquee" }]
+}
+{% endschema %}

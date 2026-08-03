@@ -1,0 +1,70 @@
+<article class="page-width section">
+  <div class="article__body">
+    <div class="article-card__meta">
+      {{ article.published_at | date: '%b %d, %Y' }}
+      {%- if article.author != blank %} · {{ 'blogs.article.by_author' | t: author: article.author }}{% endif -%}
+    </div>
+    <h1>{{ article.title | escape }}</h1>
+  </div>
+
+  {%- if article.image -%}
+    <img
+      src="{{ article.image | image_url: width: 1600 }}"
+      alt="{{ article.image.alt | escape }}"
+      width="{{ article.image.width }}"
+      height="{{ article.image.height }}"
+      style="border-radius:var(--radius); margin:2rem 0"
+      fetchpriority="high"
+    >
+  {%- endif -%}
+
+  <div class="article__body rte">{{ article.content }}</div>
+
+  <div class="article__body" style="margin-top:3rem">
+    <a class="link-arrow" href="{{ blog.url }}">
+      {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
+    </a>
+  </div>
+
+  {%- if blog.comments_enabled? -%}
+    <div class="article__body" style="margin-top:3rem">
+      {%- if article.comments_count > 0 -%}
+        <h2 class="h3">{{ article.comments_count }}</h2>
+        {%- for comment in article.comments -%}
+          <div class="testimonial" style="margin-top:1rem">
+            <p>{{ comment.content }}</p>
+            <span class="testimonial__author">{{ comment.author }}</span>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- form 'new_comment', article, class: 'grid', style: 'margin-top:2rem; gap:1rem' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-status form-status--success">{{ 'contact.form.post_success' | t }}</p>
+        {%- elsif form.errors -%}
+          <p class="form-status form-status--error">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+
+        <div class="field">
+          <label class="field__label" for="CommentAuthor">{{ 'contact.form.name' | t }}</label>
+          <input class="input" id="CommentAuthor" type="text" name="comment[author]" value="{{ form.author }}" required>
+        </div>
+        <div class="field">
+          <label class="field__label" for="CommentEmail">{{ 'contact.form.email' | t }}</label>
+          <input class="input" id="CommentEmail" type="email" name="comment[email]" value="{{ form.email }}" required>
+        </div>
+        <div class="field">
+          <label class="field__label" for="CommentBody">{{ 'contact.form.message' | t }}</label>
+          <textarea class="input" id="CommentBody" name="comment[body]" required>{{ form.body }}</textarea>
+        </div>
+        <button class="button" type="submit" style="justify-self:start">{{ 'contact.form.send' | t }}</button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</article>
+
+{% schema %}
+{
+  "name": "Article"
+}
+{% endschema %}

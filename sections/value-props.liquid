@@ -1,0 +1,53 @@
+<section class="value-props">
+  <div class="page-width">
+    <div class="value-props__grid">
+      {%- for block in section.blocks -%}
+        <div class="value-prop" {{ block.shopify_attributes }}>
+          {% render 'icon', icon: block.settings.icon, size: 28 %}
+          <span class="value-prop__title">{{ block.settings.title | escape }}</span>
+          <span class="value-prop__text">{{ block.settings.text | escape }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Value props",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "prop",
+      "name": "Value prop",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Shipping" },
+            { "value": "shield", "label": "Warranty" },
+            { "value": "return", "label": "Returns" },
+            { "value": "dumbbell", "label": "Training" }
+          ],
+          "default": "truck"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free shipping over $75" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Ships in 1–2 business days" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value props",
+      "blocks": [
+        { "type": "prop", "settings": { "icon": "truck", "title": "Free shipping over $75", "text": "Ships in 1–2 business days" } },
+        { "type": "prop", "settings": { "icon": "shield", "title": "Lifetime warranty", "text": "On all cast-iron and steel" } },
+        { "type": "prop", "settings": { "icon": "return", "title": "60-day returns", "text": "Train with it, then decide" } },
+        { "type": "prop", "settings": { "icon": "dumbbell", "title": "Coach-tested", "text": "Vetted in real training rooms" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

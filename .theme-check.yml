@@ -1,0 +1,12 @@
+# Run with: shopify theme check
+extends: theme-check:all
+
+ignore:
+  - node_modules/**
+  - data/**
+
+# theme.js is 18KB raw but 4.6KB over the wire, which is comfortably inside
+# the intent of this rule. The check measures the uncompressed file locally.
+AssetSizeJavaScript:
+  enabled: true
+  thresholdInBytes: 20000

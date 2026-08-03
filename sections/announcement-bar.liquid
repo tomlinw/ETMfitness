@@ -1,0 +1,66 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="announcement" style="background: {{ section.settings.background }}; color: {{ section.settings.text_color }}">
+    <div class="page-width">
+      {%- for block in section.blocks -%}
+        <div class="announcement__inner" {{ block.shopify_attributes }} {% unless forloop.first %}hidden{% endunless %}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>
+          {%- else -%}
+            <span>{{ block.settings.text | escape }}</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <script>
+      (function () {
+        const bars = document.currentScript.parentElement.querySelectorAll('.announcement__inner');
+        let index = 0;
+        setInterval(function () {
+          bars[index].hidden = true;
+          index = (index + 1) % bars.length;
+          bars[index].hidden = false;
+        }, {{ section.settings.rotate_speed | times: 1000 }});
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "color", "id": "background", "label": "Background", "default": "#d7ff3e" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#0b0c0e" },
+    {
+      "type": "range",
+      "id": "rotate_speed",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Rotation speed",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $75 — 60-day returns" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "announcement", "settings": { "text": "Free shipping over $75 — 60-day returns" } },
+      { "type": "announcement", "settings": { "text": "Lifetime warranty on all cast-iron gear" } }
+    ]
+  }
+}
+{% endschema %}

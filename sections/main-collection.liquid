@@ -1,0 +1,61 @@
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <div class="page-width">
+    <div class="collection-banner">
+      <span class="eyebrow">{{ 'collections.general.items_with_count' | t: count: collection.products_count }}</span>
+      <h1>{{ collection.title | escape }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection-banner__description rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {% render 'facets',
+      results: collection,
+      enable_filtering: section.settings.enable_filtering,
+      enable_sorting: section.settings.enable_sorting
+    %}
+
+    {%- if collection.products.size == 0 -%}
+      <div class="empty-state">
+        <h2 class="h3">{{ 'collections.general.no_matches' | t }}</h2>
+        <a class="button button--secondary" href="{{ collection.url }}">{{ 'collections.filters.clear_all' | t }}</a>
+      </div>
+    {%- else -%}
+      <div
+        class="product-grid"
+        style="--grid-md: {{ section.settings.columns | at_most: 3 }}; --grid-lg: {{ section.settings.columns }}"
+      >
+        {%- for product in collection.products -%}
+          {%- liquid
+            assign lazy_load = true
+            if forloop.index0 < 4
+              assign lazy_load = false
+            endif
+          -%}
+          {% render 'product-card', product: product, lazy: lazy_load %}
+        {%- endfor -%}
+      </div>
+
+      {% render 'pagination', paginate: paginate %}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Products per page",
+      "default": 24
+    },
+    { "type": "range", "id": "columns", "min": 2, "max": 5, "step": 1, "label": "Columns on desktop", "default": 4 },
+    { "type": "checkbox", "id": "enable_filtering", "label": "Enable filtering", "default": true },
+    { "type": "checkbox", "id": "enable_sorting", "label": "Enable sorting", "default": true }
+  ]
+}
+{% endschema %}

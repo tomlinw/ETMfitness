@@ -1,0 +1,222 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Ironforge",
+    "theme_version": "1.0.0",
+    "theme_author": "Ironforge Athletics",
+    "theme_documentation_url": "https://shopify.dev/docs/themes",
+    "theme_support_url": "https://shopify.dev/docs/themes"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 60,
+        "max": 260,
+        "step": 10,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 150
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "textarea",
+        "id": "brand_tagline",
+        "label": "Tagline",
+        "default": "Gear that earns its place in your gym bag."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background",
+        "default": "#0b0c0e"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface / cards",
+        "default": "#15171b"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#f4f5f7"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent",
+        "default": "#d7ff3e"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_contrast",
+        "label": "Text on accent",
+        "default": "#0b0c0e"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale price",
+        "default": "#ff5a36"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Headings",
+        "default": "archivo_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body",
+        "default": "archivo_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 90,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading size",
+        "default": 100
+      },
+      {
+        "type": "checkbox",
+        "id": "heading_uppercase",
+        "label": "Uppercase headings",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1100,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Page width",
+        "default": 1360
+      },
+      {
+        "type": "range",
+        "id": "corner_radius",
+        "min": 0,
+        "max": 20,
+        "step": 2,
+        "unit": "px",
+        "label": "Corner radius",
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "Image ratio",
+        "options": [
+          { "value": "square", "label": "Square" },
+          { "value": "portrait", "label": "Portrait" },
+          { "value": "landscape", "label": "Landscape" }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_second_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_rating",
+        "label": "Show product rating",
+        "info": "Requires a review app that sets the product rating metafield.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_quick_add",
+        "label": "Enable quick add",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_note",
+        "label": "Enable order notes",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "free_shipping_threshold",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "label": "Free shipping threshold",
+        "info": "In your store currency. Set to 0 to hide the progress bar.",
+        "default": 75
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram_link", "label": "Instagram" },
+      { "type": "text", "id": "social_tiktok_link", "label": "TikTok" },
+      { "type": "text", "id": "social_youtube_link", "label": "YouTube" },
+      { "type": "text", "id": "social_facebook_link", "label": "Facebook" },
+      { "type": "text", "id": "social_x_link", "label": "X" }
+    ]
+  }
+]
